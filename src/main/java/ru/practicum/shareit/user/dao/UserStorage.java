@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserStorage {
-
     public User save(User user);
 
     public User update(Long id, User newUser);

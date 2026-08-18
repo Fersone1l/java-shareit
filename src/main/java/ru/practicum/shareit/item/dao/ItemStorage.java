@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ItemStorage {
-
     public Item save(Item item);
 
     public Item update(Item newItem, Long id);
