@@ -3,7 +3,7 @@ package ru.practicum.shareit.item;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.exception.NotFoundException;
-import ru.practicum.shareit.item.dao.InMemoryItemRepository;
+import ru.practicum.shareit.item.dao.ItemStorage;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.UserService;
 
@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ItemService {
-    private final InMemoryItemRepository itemStorage;
+    private final ItemStorage itemStorage;
     private final UserService userService;
 
     public Item create(Item item) {

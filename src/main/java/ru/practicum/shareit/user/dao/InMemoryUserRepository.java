@@ -6,7 +6,7 @@ import ru.practicum.shareit.user.User;
 import java.util.*;
 
 @Repository
-public class InMemoryUserRepository {
+public class InMemoryUserRepository implements UserStorage {
     private final Map<Long, User> users = new HashMap<>();
     private long idCounter = 1L;
 

@@ -4,14 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.exception.ConflictException;
 import ru.practicum.shareit.exception.NotFoundException;
-import ru.practicum.shareit.user.dao.InMemoryUserRepository;
+import ru.practicum.shareit.user.dao.UserStorage;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
-    private final InMemoryUserRepository userStorage;
+    private final UserStorage userStorage;
 
     public List<User> findAll() {
         return userStorage.findAll();
