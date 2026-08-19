@@ -12,9 +12,7 @@ public class InMemoryItemRepository implements ItemStorage {
     private long idCounter = 1L;
 
     public Item save(Item item) {
-        if (item.getId() == null) {
-            item.setId(idCounter++);
-        }
+        item.setId(idCounter++);
         items.put(item.getId(), item);
         return item;
     }

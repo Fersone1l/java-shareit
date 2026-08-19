@@ -1,12 +1,14 @@
 package ru.practicum.shareit.item.dto;
 
+import lombok.experimental.UtilityClass;
 import ru.practicum.shareit.item.model.Item;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@UtilityClass
 public class ItemMapper {
-    public static ItemDto itemToDto(Item item) {
+    public ItemDto itemToDto(Item item) {
         ItemDto dto = new ItemDto();
         dto.setId(item.getId());
         dto.setName(item.getName());
@@ -15,7 +17,7 @@ public class ItemMapper {
         return dto;
     }
 
-    public static Item dtoToItem(ItemDto dto, Long userId) {
+    public Item dtoToItem(ItemDto dto, Long userId) {
         Item item = new Item();
         item.setName(dto.getName());
         item.setDescription(dto.getDescription());
@@ -24,7 +26,7 @@ public class ItemMapper {
         return item;
     }
 
-    public static List<ItemDto> itemListToDtoList(List<Item> items) {
+    public List<ItemDto> itemListToDtoList(List<Item> items) {
         ArrayList<ItemDto> dtoItems = new ArrayList<>();
         for (Item item : items) {
             dtoItems.add(itemToDto(item));

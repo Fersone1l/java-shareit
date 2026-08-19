@@ -11,9 +11,7 @@ public class InMemoryUserRepository implements UserStorage {
     private long idCounter = 1L;
 
     public User save(User user) {
-        if (user.getId() == null) {
-            user.setId(idCounter++);
-        }
+        user.setId(idCounter++);
         users.put(user.getId(), user);
         return user;
     }

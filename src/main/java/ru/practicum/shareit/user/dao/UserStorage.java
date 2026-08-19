@@ -6,15 +6,15 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserStorage {
-    public User save(User user);
+    User save(User user);
 
-    public User update(Long id, User newUser);
+    User update(Long id, User newUser);
 
-    public List<User> findAll();
+    List<User> findAll();
 
-    public void deleteById(Long id);
+    void deleteById(Long id);
 
-    public boolean existsByEmail(String email);
+    boolean existsByEmail(String email);
 
-    public Optional<User> findById(Long id);
+    Optional<User> findById(Long id);
 }

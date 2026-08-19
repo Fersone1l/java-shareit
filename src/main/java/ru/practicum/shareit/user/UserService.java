@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import ru.practicum.shareit.exception.ConflictException;
 import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.user.dao.UserStorage;
+import ru.practicum.shareit.user.dto.UserDto;
+import ru.practicum.shareit.user.dto.UserMapper;
 
 import java.util.List;
 
@@ -13,33 +15,35 @@ import java.util.List;
 public class UserService {
     private final UserStorage userStorage;
 
-    public List<User> findAll() {
-        return userStorage.findAll();
+    public List<UserDto> findAll() {
+        return UserMapper.userListToDtoList(userStorage.findAll());
     }
 
-    public User create(User user) {
+    public UserDto create(UserDto dto) {
+        User user = UserMapper.dtoToUser(dto);
         if (userStorage.existsByEmail(user.getEmail())) {
             throw new ConflictException("Данная почта уже используется другим пользователем");
         }
-        return userStorage.save(user);
+        return UserMapper.userToDto(userStorage.save(user));
     }
 
     public void deleteUser(Long id) {
         userStorage.deleteById(id);
     }
 
-    public User getUserById(Long id) {
-        return userStorage.findById(id)
-                .orElseThrow(() -> new NotFoundException("Пользователя с таким id не существует"));
+    public UserDto getUserById(Long id) {
+        return UserMapper.userToDto(userStorage.findById(id)
+                .orElseThrow(() -> new NotFoundException("Пользователя с таким id не существует")));
     }
 
-    public User update(Long id, User newUser) {
-        User user = getUserById(id);
+    public UserDto update(Long id, UserDto dto) {
+        User newUser = UserMapper.dtoToUser(dto);
+        User user = userStorage.findById(id)
+                .orElseThrow(() -> new NotFoundException("Пользователя с таким id не существует"));
         if (userStorage.existsByEmail(newUser.getEmail())
                 && !user.getEmail().equals(newUser.getEmail())) {
-            System.out.println("ConflictException!");
             throw new ConflictException("Данная почта уже используется другим пользователем");
         }
-        return userStorage.update(id, newUser);
+        return UserMapper.userToDto(userStorage.update(id, newUser));
     }
 }
