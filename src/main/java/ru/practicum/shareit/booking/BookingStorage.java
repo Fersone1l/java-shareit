@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface BookingStorage extends JpaRepository<Booking, Long> {
+
     List<Booking> findAllByBookerId(Long bookerId, Sort sort);
 
     List<Booking> findAllByBookerIdAndStartBeforeAndEndAfter(
