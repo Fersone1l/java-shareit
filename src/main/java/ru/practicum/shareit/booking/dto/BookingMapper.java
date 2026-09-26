@@ -23,8 +23,7 @@ public class BookingMapper {
         dto.setItem(itemDto);
 
         BookerDto bookerDto = new BookerDto();
-        bookerDto.setId(booking.getBooker().getId());
-        bookerDto.setName(booking.getBooker().getName());
+        bookerDto.setId(booking.getBookerId());
         dto.setBooker(bookerDto);
 
         return dto;
@@ -41,7 +40,7 @@ public class BookingMapper {
     public BookingShortDto toShortDto(Booking booking) {
         BookingShortDto dto = new BookingShortDto();
         dto.setId(booking.getId());
-        dto.setBookerId(booking.getBooker().getId());
+        dto.setBookerId(booking.getBookerId());
         return dto;
     }
 }

@@ -19,7 +19,7 @@ public interface BookingStorage extends JpaRepository<Booking, Long> {
 
     List<Booking> findAllByBookerIdAndStartAfter(Long bookerId, LocalDateTime now, Sort sort);
 
-    List<Booking> findAllByBookerIdAndStatus(Long bookerId, Booking.Status status, Sort sort);
+    List<Booking> findAllByBookerIdAndStatus(Long bookerId, Status status, Sort sort);
 
     @Query("select b from Booking b " +
             "where b.item.owner.id = :ownerId")
@@ -44,7 +44,7 @@ public interface BookingStorage extends JpaRepository<Booking, Long> {
     @Query("select b from Booking b " +
             "where b.item.owner.id = :ownerId and b.status = :status")
     List<Booking> findByOwnerIdAndStatus(@Param("ownerId") Long ownerId,
-                                         @Param("status") Booking.Status status, Sort sort);
+                                         @Param("status") Status status, Sort sort);
 
     @Query("select b from Booking b " +
             "where b.item.id in :itemIds and b.status = 'APPROVED' " +
@@ -53,7 +53,7 @@ public interface BookingStorage extends JpaRepository<Booking, Long> {
 
     @Query("select b from Booking b " +
             "where b.item.id = :itemId " +
-            "and b.booker.id = :userId " +
+            "and b.bookerId = :userId " +
             "and b.status = 'APPROVED' " +
             "and b.end < :now")
     List<Booking> findCompletedBookings(@Param("itemId") Long itemId,

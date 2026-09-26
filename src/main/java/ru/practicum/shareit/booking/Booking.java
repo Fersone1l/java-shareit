@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import ru.practicum.shareit.item.Item;
-import ru.practicum.shareit.user.User;
 
 import java.time.LocalDateTime;
 
@@ -28,17 +27,12 @@ public class Booking {
     @JoinColumn(name = "item_id", nullable = false)
     private Item item;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "booker_id", nullable = false)
-    private User booker;
+    @Column(name = "booker_id", nullable = false)
+    private Long bookerId;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 50)
     private Status status;
 
-    public enum Status {
-        WAITING,
-        APPROVED,
-        REJECTED
-    }
+
 }

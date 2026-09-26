@@ -8,6 +8,7 @@ import ru.practicum.shareit.item.dto.CommentDto;
 import ru.practicum.shareit.item.dto.CommentRequestDto;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.dto.ItemWithBookingsDto;
+import static ru.practicum.shareit.common.Constants.USER_HEADER;
 
 import java.util.List;
 
@@ -18,13 +19,13 @@ public class ItemController {
     private final ItemService itemService;
 
     @PostMapping
-    public ItemDto create(@RequestHeader("X-Sharer-User-Id") Long userId,
+    public ItemDto create(@RequestHeader(USER_HEADER) Long userId,
                           @Validated @RequestBody ItemDto dto) {
         return itemService.create(dto, userId);
     }
 
     @PatchMapping("/{id}")
-    public ItemDto update(@RequestHeader("X-Sharer-User-Id") Long userId,
+    public ItemDto update(@RequestHeader(USER_HEADER) Long userId,
                           @PathVariable Long id,
                           @RequestBody ItemDto dto) {
         return itemService.update(userId, dto, id);
@@ -32,13 +33,13 @@ public class ItemController {
 
     @GetMapping
     public List<ItemWithBookingsDto> getItemsByUser(
-            @RequestHeader("X-Sharer-User-Id") Long userId) {
+            @RequestHeader(USER_HEADER) Long userId) {
         return itemService.getItemsByUser(userId);
     }
 
     @GetMapping("/{itemId}")
     public ItemWithBookingsDto getItemById(@PathVariable Long itemId,
-                                           @RequestHeader("X-Sharer-User-Id") Long userId) {
+                                           @RequestHeader(USER_HEADER) Long userId) {
         return itemService.getItemById(itemId, userId);
     }
 
@@ -49,7 +50,7 @@ public class ItemController {
 
     @PostMapping("/{itemId}/comment")
     public CommentDto addComment(@PathVariable Long itemId,
-                                 @RequestHeader("X-Sharer-User-Id") Long userId,
+                                 @RequestHeader(USER_HEADER) Long userId,
                                  @Valid @RequestBody CommentRequestDto dto) {
         return itemService.addComment(itemId, userId, dto);
     }

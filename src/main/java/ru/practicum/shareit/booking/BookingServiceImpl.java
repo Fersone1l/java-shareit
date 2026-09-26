@@ -32,8 +32,7 @@ public class BookingServiceImpl implements BookingService {
     @Override
     @Transactional
     public BookingDto create(BookingRequestDto dto, Long userId) {
-        if (dto.getStart() == null || dto.getEnd() == null
-                || !dto.getEnd().isAfter(dto.getStart())) {
+        if (!dto.getEnd().isAfter(dto.getStart())) {
             throw new ValidationException("Некорректные даты бронирования");
         }
 
@@ -54,8 +53,8 @@ public class BookingServiceImpl implements BookingService {
         booking.setStart(dto.getStart());
         booking.setEnd(dto.getEnd());
         booking.setItem(item);
-        booking.setBooker(booker);
-        booking.setStatus(Booking.Status.WAITING);
+        booking.setBookerId(booker.getId());
+        booking.setStatus(Status.WAITING);
 
         return BookingMapper.toDto(bookingRepository.save(booking));
     }
@@ -69,11 +68,11 @@ public class BookingServiceImpl implements BookingService {
         if (!booking.getItem().getOwner().getId().equals(ownerId)) {
             throw new ForbiddenException("Подтвердить бронирование может только владелец вещи");
         }
-        if (booking.getStatus() != Booking.Status.WAITING) {
+        if (booking.getStatus() != Status.WAITING) {
             throw new ValidationException("Бронирование уже обработано");
         }
 
-        booking.setStatus(approved ? Booking.Status.APPROVED : Booking.Status.REJECTED);
+        booking.setStatus(approved ? Status.APPROVED : Status.REJECTED);
         return BookingMapper.toDto(booking);
     }
 
@@ -82,7 +81,7 @@ public class BookingServiceImpl implements BookingService {
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new NotFoundException("Бронирования с таким id не существует"));
 
-        boolean isBooker = booking.getBooker().getId().equals(userId);
+        boolean isBooker = booking.getBookerId().equals(userId);
         boolean isOwner = booking.getItem().getOwner().getId().equals(userId);
         if (!isBooker && !isOwner) {
             throw new NotFoundException("Нет доступа к этому бронированию");
@@ -105,9 +104,9 @@ public class BookingServiceImpl implements BookingService {
             case FUTURE   -> bookingRepository.findAllByBookerIdAndStartAfter(
                     userId, now, SORT_DESC_BY_START);
             case WAITING  -> bookingRepository.findAllByBookerIdAndStatus(
-                    userId, Booking.Status.WAITING, SORT_DESC_BY_START);
+                    userId, Status.WAITING, SORT_DESC_BY_START);
             case REJECTED -> bookingRepository.findAllByBookerIdAndStatus(
-                    userId, Booking.Status.REJECTED, SORT_DESC_BY_START);
+                    userId, Status.REJECTED, SORT_DESC_BY_START);
         };
         return BookingMapper.toDtoList(bookings);
     }
@@ -124,9 +123,9 @@ public class BookingServiceImpl implements BookingService {
             case PAST     -> bookingRepository.findPastByOwnerId(userId, now, SORT_DESC_BY_START);
             case FUTURE   -> bookingRepository.findFutureByOwnerId(userId, now, SORT_DESC_BY_START);
             case WAITING  -> bookingRepository.findByOwnerIdAndStatus(
-                    userId, Booking.Status.WAITING, SORT_DESC_BY_START);
+                    userId, Status.WAITING, SORT_DESC_BY_START);
             case REJECTED -> bookingRepository.findByOwnerIdAndStatus(
-                    userId, Booking.Status.REJECTED, SORT_DESC_BY_START);
+                    userId, Status.REJECTED, SORT_DESC_BY_START);
         };
         return BookingMapper.toDtoList(bookings);
     }
