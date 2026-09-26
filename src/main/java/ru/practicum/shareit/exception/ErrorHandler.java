@@ -50,4 +50,10 @@ public class ErrorHandler {
                 "Произошла непредвиденная ошибка: " + e.getMessage()
         );
     }
+
+    @ExceptionHandler(ForbiddenException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ErrorResponse handleForbidden(ForbiddenException e) {
+        return new ErrorResponse("Доступ запрещён", e.getMessage());
+    }
 }
