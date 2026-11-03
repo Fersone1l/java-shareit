@@ -32,13 +32,11 @@ class BookingRequestDtoJsonTest {
 
     @Test
     void deserialize() throws Exception {
-        String content = """
-                {
-                  "itemId": 5,
-                  "start": "2026-11-10T12:00:00",
-                  "end": "2026-11-12T12:00:00"
-                }
-                """;
+        String content = "{"
+                + "\"itemId\": 5,"
+                + "\"start\": \"2026-11-10T12:00:00\","
+                + "\"end\": \"2026-11-12T12:00:00\""
+                + "}";
 
         BookingRequestDto dto = json.parseObject(content);
 
