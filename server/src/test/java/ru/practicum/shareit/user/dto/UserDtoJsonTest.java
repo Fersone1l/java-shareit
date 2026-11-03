@@ -23,9 +23,9 @@ class UserDtoJsonTest {
 
         JsonContent<UserDto> result = json.write(dto);
 
-        assertThat(result).extractingJsonPathNumberValue("$.id").isEqualTo(1);
-        assertThat(result).extractingJsonPathStringValue("$.name").isEqualTo("Ivan");
-        assertThat(result).extractingJsonPathStringValue("$.email").isEqualTo("ivan@mail.com");
+        assertThat(result).extractingJsonPathNumberValue("$.id").isEqualTo(dto.getId().intValue());
+        assertThat(result).extractingJsonPathStringValue("$.name").isEqualTo(dto.getName());
+        assertThat(result).extractingJsonPathStringValue("$.email").isEqualTo(dto.getEmail());
     }
 
     @Test

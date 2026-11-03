@@ -25,9 +25,9 @@ class BookingRequestDtoJsonTest {
 
         JsonContent<BookingRequestDto> result = json.write(dto);
 
-        assertThat(result).extractingJsonPathNumberValue("$.itemId").isEqualTo(5);
-        assertThat(result).extractingJsonPathStringValue("$.start").isEqualTo("2026-11-10T12:00:00");
-        assertThat(result).extractingJsonPathStringValue("$.end").isEqualTo("2026-11-12T12:00:00");
+        assertThat(result).extractingJsonPathNumberValue("$.itemId").isEqualTo(dto.getItemId().intValue());
+        assertThat(result).extractingJsonPathStringValue("$.start").isEqualTo(dto.getStart().toString());
+        assertThat(result).extractingJsonPathStringValue("$.end").isEqualTo(dto.getEnd().toString());
     }
 
     @Test

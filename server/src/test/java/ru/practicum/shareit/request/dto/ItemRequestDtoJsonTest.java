@@ -27,9 +27,9 @@ class ItemRequestDtoJsonTest {
 
         JsonContent<ItemRequestDto> result = json.write(dto);
 
-        assertThat(result).extractingJsonPathNumberValue("$.id").isEqualTo(1);
-        assertThat(result).extractingJsonPathStringValue("$.description").isEqualTo("Нужна дрель");
-        assertThat(result).extractingJsonPathStringValue("$.created").isEqualTo("2026-11-03T10:00:00");
+        assertThat(result).extractingJsonPathNumberValue("$.id").isEqualTo(dto.getId().intValue());
+        assertThat(result).extractingJsonPathStringValue("$.description").isEqualTo(dto.getDescription());
+        assertThat(result).extractingJsonPathStringValue("$.created").isEqualTo(dto.getCreated().toString());
     }
 
     @Test

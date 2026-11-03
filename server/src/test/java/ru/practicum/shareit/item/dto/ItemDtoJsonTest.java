@@ -25,11 +25,11 @@ class ItemDtoJsonTest {
 
         JsonContent<ItemDto> result = json.write(dto);
 
-        assertThat(result).extractingJsonPathNumberValue("$.id").isEqualTo(1);
-        assertThat(result).extractingJsonPathStringValue("$.name").isEqualTo("Дрель");
-        assertThat(result).extractingJsonPathStringValue("$.description").isEqualTo("Мощная");
-        assertThat(result).extractingJsonPathBooleanValue("$.available").isEqualTo(true);
-        assertThat(result).extractingJsonPathNumberValue("$.requestId").isEqualTo(10);
+        assertThat(result).extractingJsonPathNumberValue("$.id").isEqualTo(dto.getId().intValue());
+        assertThat(result).extractingJsonPathStringValue("$.name").isEqualTo(dto.getName());
+        assertThat(result).extractingJsonPathStringValue("$.description").isEqualTo(dto.getDescription());
+        assertThat(result).extractingJsonPathBooleanValue("$.available").isEqualTo(dto.getAvailable());
+        assertThat(result).extractingJsonPathNumberValue("$.requestId").isEqualTo(dto.getRequestId().intValue());
     }
 
     @Test

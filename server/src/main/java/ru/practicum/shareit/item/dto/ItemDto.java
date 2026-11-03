@@ -10,13 +10,10 @@ import java.util.List;
 public class ItemDto {
     private Long id;
 
-    @NotBlank(message = "Имя должно быть указано")
     private String name;
 
-    @NotBlank(message = "Описание должно быть указано")
     private String description;
 
-    @NotNull(message = "Доступность должна быть указана")
     private Boolean available;
 
     private Long ownerId;
