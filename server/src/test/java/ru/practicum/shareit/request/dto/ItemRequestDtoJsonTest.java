@@ -7,6 +7,7 @@ import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.json.JsonContent;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,7 +30,8 @@ class ItemRequestDtoJsonTest {
 
         assertThat(result).extractingJsonPathNumberValue("$.id").isEqualTo(dto.getId().intValue());
         assertThat(result).extractingJsonPathStringValue("$.description").isEqualTo(dto.getDescription());
-        assertThat(result).extractingJsonPathStringValue("$.created").isEqualTo(dto.getCreated().toString());
+        assertThat(result).extractingJsonPathStringValue("$.created")
+                .isEqualTo(dto.getCreated().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
     }
 
     @Test
